@@ -2,11 +2,11 @@ package btw.lowercase.namehider.mixins;
 
 import btw.lowercase.namehider.config.NameHiderConfig;
 import btw.lowercase.namehider.handlers.NameHandler;
-import btw.lowercase.namehider.mixins.accessor.NetHandlerPlayClientAccessor;
 import btw.lowercase.namehider.util.GameUtil;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.util.IChatComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,12 +44,17 @@ public abstract class MixinFontRenderer {
 
             final NetHandlerPlayClient netHandler = GameUtil.client.getNetHandler();
             if (NameHiderConfig.INSTANCE.hideOthersName && netHandler != null) {
-                for (final NetworkPlayerInfo info : ((NetHandlerPlayClientAccessor) netHandler).namehider$getPlayerInfoMap().values()) {
-                    try {
-                        // TODO/FIX: Null
-                        text = NameHandler.replaceHiddenNames(text, info.getDisplayName().getFormattedText(), info);
-                    } catch (final Exception exception) {
+                for (final NetworkPlayerInfo info : netHandler.getPlayerInfoMap()) {
+                    String username;
+
+                    final IChatComponent displayName = info.getDisplayName();
+                    if (displayName != null) {
+                        username = displayName.getFormattedText();
+                    } else {
+                        username = info.getGameProfile().getName();
                     }
+
+                    text = NameHandler.replaceHiddenNames(text, username, info);
                 }
             }
 
