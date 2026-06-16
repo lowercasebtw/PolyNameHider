@@ -81,8 +81,8 @@ public class NameHiderConfig extends Config {
         this.initialize();
 
         // Name
-        this.addListener("nameSuffix", NameHandler::reloadSuffixes);
-        this.addListener("suffixBackupType", NameHandler::reloadSuffixes);
+        this.addListener("nameSuffix", NameHandler::clear);
+        this.addListener("suffixBackupType", NameHandler::clear);
 
         // Skins
         this.addDependency("everyoneIsYou", "hideOthersSkin");

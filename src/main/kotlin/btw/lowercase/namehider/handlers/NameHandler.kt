@@ -3,18 +3,16 @@ package btw.lowercase.namehider.handlers
 import btw.lowercase.namehider.config.NameHiderConfig
 import btw.lowercase.namehider.config.SuffixBackupType
 import btw.lowercase.namehider.util.DictionaryUtil
-import btw.lowercase.namehider.util.GameUtil
 import net.minecraft.client.network.NetworkPlayerInfo
 
 object NameHandler {
     private var lastId = 0
-    private val playerSuffixMap = HashMap<NetworkPlayerInfo, String>()
-    private var localPlayerSuffix: String = ""
+    private val suffixMap = HashMap<NetworkPlayerInfo, String>()
 
     @JvmStatic
     fun getNickname(info: NetworkPlayerInfo): String {
-        val prefix = getPrefix()
-        val suffix = getSuffix(info)
+        val prefix = this.getPrefix()
+        val suffix = this.getSuffix(info)
         return "$prefix-$suffix"
     }
 
@@ -23,48 +21,25 @@ object NameHandler {
     }
 
     private fun getSuffix(info: NetworkPlayerInfo): String {
-        val definedSuffix = if (info == GameUtil.localPlayerInfo) localPlayerSuffix else this.getPlayerSuffix(info)
-        return if (!definedSuffix.isEmpty()) {
-            definedSuffix
-        } else {
-            NameHiderConfig.INSTANCE.nameSuffix.trim().ifEmpty { "unknown" }
+        if (!this.suffixMap.containsKey(info)) {
+            this.assignSuffix(info)
         }
+
+        return this.suffixMap[info] ?: "error"
     }
 
-    @JvmStatic
-    fun assignPlayerSuffix(info: NetworkPlayerInfo) {
-        val nameSuffix = NameHiderConfig.INSTANCE.nameSuffix.trim()
-        val suffix = nameSuffix.ifEmpty {
+    private fun assignSuffix(info: NetworkPlayerInfo) {
+        this.suffixMap[info] = NameHiderConfig.INSTANCE.nameSuffix.trim().ifEmpty {
             when (NameHiderConfig.INSTANCE.suffixBackupType()) {
-                SuffixBackupType.COUNTER -> "${lastId++}"
+                SuffixBackupType.COUNTER -> "${this.lastId++}"
                 SuffixBackupType.RANDOM_WORD -> DictionaryUtil.random()
             }
         }
-
-        if (info == GameUtil.localPlayerInfo) {
-            localPlayerSuffix = suffix
-        } else {
-            this.playerSuffixMap[info] = suffix
-        }
     }
 
     @JvmStatic
-    fun reloadSuffixes() {
-        assignPlayerSuffix(GameUtil.localPlayerInfo)
-        for (entry in this.playerSuffixMap) {
-            assignPlayerSuffix(entry.key)
-        }
-    }
-
-    @JvmStatic
-    fun clearPlayerSuffixes() {
+    fun clear() {
         this.lastId = 0
-        this.playerSuffixMap.clear()
-        this.localPlayerSuffix = ""
-    }
-
-    @JvmStatic
-    fun getPlayerSuffix(info: NetworkPlayerInfo): String {
-        return this.playerSuffixMap[info] ?: ""
+        this.suffixMap.clear()
     }
 }
