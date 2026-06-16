@@ -1,2 +1,3 @@
 - Fix nick in chat clearing chat formatting
-- Fix scoreboard/everywhere else being able to display name (possibly inject into FontRenderer?)
+- On suffix type change, reset every players nick in the game using the new type
+- Hide Other Players Skin also hides your own

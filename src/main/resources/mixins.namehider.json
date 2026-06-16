@@ -7,7 +7,7 @@
 	"client": [
 		"MixinAbstractClientPlayer",
 		"MixinEntityPlayer",
-		"MixinGuiNewChat",
+      "MixinFontRenderer",
 		"MixinNetHandlerPlayClient",
 		"accessor.AbstractClientPlayerAccessor",
 		"accessor.NetHandlerPlayClientAccessor"

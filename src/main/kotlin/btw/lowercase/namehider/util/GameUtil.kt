@@ -1,5 +1,6 @@
 package btw.lowercase.namehider.util
 
+import com.mojang.authlib.GameProfile
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.client.network.NetworkPlayerInfo
@@ -13,11 +14,11 @@ object GameUtil {
     val localPlayer: EntityPlayerSP? = client.thePlayer
 
     @JvmField
-    val localUsername = localPlayer?.name ?: ""
+    val localProfile: GameProfile = client.session.profile
 
     @JvmField
-    val localPlayerInfo: NetworkPlayerInfo = NetworkPlayerInfo(client.session.profile)
+    val localPlayerInfo: NetworkPlayerInfo = NetworkPlayerInfo(localProfile)
 
     @JvmStatic
-    fun isSelf(entity: Entity) = entity.entityId == localPlayer?.entityId
+    fun isSelf(entity: Entity) = entity == localPlayer
 }
