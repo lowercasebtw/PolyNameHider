@@ -1,4 +1,4 @@
-- Hide Other Players Skin also hides your own
 - Null crash in MixinFontRenderer with hiding other names
-- Assign nicknames properly (currently doesnt work, not even for self)
+  - Code temporarily surrounded with try, other names are still visible
 - Clean code up/proper code
+- lag
