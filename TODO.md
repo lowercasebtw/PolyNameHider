@@ -1,3 +1,3 @@
-- Fix nick in chat clearing chat formatting
 - On suffix type change, reset every players nick in the game using the new type
 - Hide Other Players Skin also hides your own
+- Assign suffix to players on join
