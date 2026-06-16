@@ -1,0 +1,2 @@
+- Fix nick in chat clearing chat formatting
+- Fix scoreboard/everywhere else being able to display name (possibly inject into FontRenderer?)

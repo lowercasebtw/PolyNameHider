@@ -1,0 +1,15 @@
+{
+	"compatibilityLevel": "JAVA_8",
+	"minVersion": "0.7",
+	"package": "btw.lowercase.namehider.mixins",
+	"refmap": "mixins.${id}.refmap.json",
+	"verbose": true,
+	"client": [
+		"MixinAbstractClientPlayer",
+		"MixinEntityPlayer",
+		"MixinGuiNewChat",
+		"MixinNetHandlerPlayClient",
+		"accessor.AbstractClientPlayerAccessor",
+		"accessor.NetHandlerPlayClientAccessor"
+	]
+}
