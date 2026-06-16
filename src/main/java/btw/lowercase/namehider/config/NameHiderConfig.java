@@ -1,6 +1,7 @@
 package btw.lowercase.namehider.config;
 
 import btw.lowercase.namehider.NameHider;
+import btw.lowercase.namehider.handlers.NameHandler;
 import cc.polyfrost.oneconfig.config.Config;
 import cc.polyfrost.oneconfig.config.annotations.Dropdown;
 import cc.polyfrost.oneconfig.config.annotations.Exclude;
@@ -78,6 +79,10 @@ public class NameHiderConfig extends Config {
     public NameHiderConfig() {
         super(NameHider.MOD, NameHider.MOD_ID + ".json");
         this.initialize();
+
+        // Name
+        this.addListener("nameSuffix", NameHandler::reloadSuffixes);
+        this.addListener("suffixBackupType", NameHandler::reloadSuffixes);
 
         // Skins
         this.addDependency("everyoneIsYou", "hideOthersSkin");

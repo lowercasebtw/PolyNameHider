@@ -1,3 +1,4 @@
-- On suffix type change, reset every players nick in the game using the new type
 - Hide Other Players Skin also hides your own
-- Assign suffix to players on join
+- Null crash in MixinFontRenderer with hiding other names
+- Assign nicknames properly (currently doesnt work, not even for self)
+- Clean code up/proper code

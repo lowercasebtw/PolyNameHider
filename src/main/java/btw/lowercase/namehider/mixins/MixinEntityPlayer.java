@@ -17,9 +17,10 @@ public abstract class MixinEntityPlayer {
     private void nmehider$hideName(final CallbackInfoReturnable<String> cir) {
         final EntityPlayer thiz = (EntityPlayer) (Object) this;
         if (NameHiderConfig.INSTANCE.enabled && thiz instanceof AbstractClientPlayer) {
-            final boolean isSelf = GameUtil.isSelf(thiz);
+            final AbstractClientPlayer abstractClientPlayer = (AbstractClientPlayer) thiz;
+            final boolean isSelf = GameUtil.isSelf(abstractClientPlayer);
             if ((NameHiderConfig.INSTANCE.hideYourName && isSelf) || (NameHiderConfig.INSTANCE.hideOthersName && !isSelf)) {
-                cir.setReturnValue(NameHandler.getNickname(((AbstractClientPlayerAccessor) thiz).namehider$getPlayerInfo()));
+                cir.setReturnValue(NameHandler.getNickname(((AbstractClientPlayerAccessor) abstractClientPlayer).namehider$getPlayerInfo()));
             }
         }
     }

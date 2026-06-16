@@ -11,6 +11,8 @@ import java.util.UUID;
 @Mixin(NetHandlerPlayClient.class)
 public interface NetHandlerPlayClientAccessor {
     @Accessor("playerInfoMap")
-    Map<UUID, NetworkPlayerInfo> namehider$getPlayerInfoMap();
+    default Map<UUID, NetworkPlayerInfo> namehider$getPlayerInfoMap() {
+        throw new UnsupportedOperationException();
+    }
 }
 
