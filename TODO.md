@@ -1,4 +1,2 @@
-- Null crash in MixinFontRenderer with hiding other names
-  - Code temporarily surrounded with try, other names are still visible
 - Clean code up/proper code
 - lag
